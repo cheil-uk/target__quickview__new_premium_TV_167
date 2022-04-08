@@ -1,5 +1,6 @@
 export default class BulletPoints {
  changeBulletPoints() {
+
   const skuObj = {
    QE85QN900BTXXU: [
    'Ultra-sharp lights, extreme contrast and jaw-dropping detail',
@@ -60,16 +61,23 @@ export default class BulletPoints {
    'Distraction-free viewing on an ultra slim TV with tidy cables',
    'Smart TV apps: Netflix, Prime Video, Disney+, BT Sport and more…'
    ],
+   QE55QN95BATXXU: [
+   'Ultra-sharp lights & pixel-perfect contrast, for our finest 8K picture yet',
+   'Thrilling 3D audio with Object Tracking Sound+ (OTS+)',
+   'Distraction-free viewing on an ultra slim TV with tidy cables',
+   'Smart TV apps: Netflix, Prime Video, Disney+, BT Sport and more…'
+   ],
   }
 
 
-  const currentPopUpSku = document.querySelector("#myModal > div > div > div.product__info__content > small").textContent.slice(0,11);
+  const currentPopUpSku = document.querySelector("#myModal > div > div > div.product__info__content > small").textContent.trim();
   const bulletPoints = document.querySelectorAll('.usp-text');
   for (const sku in skuObj) {
    if (Object.hasOwnProperty.call(skuObj, sku)) {
     const currentSpecs = skuObj[sku];
 
     if (currentPopUpSku === sku ) {
+
      bulletPoints.forEach((bulletPoint, x) => {
       currentSpecs.forEach((specs, y) => {
        (x === y) ? bulletPoint.innerText = specs : bulletPoint.innerText;

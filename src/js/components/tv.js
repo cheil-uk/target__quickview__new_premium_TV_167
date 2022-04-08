@@ -81,19 +81,18 @@ export default class Tv {
     const tvProducts = res[0];
     const tvOffers = res[1];
     // console.log(tvProducts, tvOffers);
-    const name       = tvProducts.data.name;
-    const modelCode  = tvProducts.data.code;
-    const variants   = tvProducts.data.variantOptions;
-    const rating     = (tvProducts.data.productRating === undefined) ? currentPanelRating : tvProducts.data.productRating;
-    const features   = tvProducts.data.productFeatureComponents;
+    const name         = tvProducts.data.name;
+    const modelCode    = tvProducts.data.code;
+    const variants     = tvProducts.data.variantOptions;
+    const rating       = (tvProducts.data.productRating === undefined) ? currentPanelRating : tvProducts.data.productRating;
+    const features     = tvProducts.data.productFeatureComponents;
     const price        = tvProducts.data.price.value;
     const promoPrice   = (tvProducts.data.promotionPrice) ? tvProducts.data.promotionPrice.value : price;
-    const image      = tvProducts.data.picture.url || tvProducts.data.variantOptions[0].galleryImagesV2[0].images[0].value.url
-    const exUrl      = tvProducts.data.externalUrl;
-    const baseCode   = tvProducts.data.baseProductCode;
-    const proRating  = (tvProducts.data.productRating === undefined) ? currentPanelRating : tvProducts.data.productRating;
-
-    const benefits   = tvOffers.data.benefits;
+    const image        = tvProducts.data.picture.url || tvProducts.data.variantOptions[0].galleryImagesV2[0].images[0].value.url
+    const exUrl        = tvProducts.data.externalUrl;
+    const baseCode     = tvProducts.data.baseProductCode;
+    const proRating    = (tvProducts.data.productRating === undefined) ? currentPanelRating : tvProducts.data.productRating;
+    const benefits     = tvOffers.data.benefits;
 
   this.popUp(
     name,
@@ -165,8 +164,10 @@ popUp(name, modelCode, variants, rating, features, price, promoPrice, image, ben
 
   const offerBlock = () => {
     const container = document.querySelector('.offer__blocks');
+
     benefits.forEach((offers, i) => {
-      if (i <= 2 ) {
+
+      if (i <= 0 ) {
         const description = offers.title;
         const div = document.createElement('div');
         div.classList.add('descripton');
@@ -179,7 +180,7 @@ popUp(name, modelCode, variants, rating, features, price, promoPrice, image, ben
   }
 
   const addToBasket = () => {
-    const buyNowBtns = document.querySelectorAll('.js-buy-now');
+    const buyNowBtns = document.querySelectorAll('.js-cta-addon');
     const container = document.querySelector('.cta__container');
 
     buyNowBtns.forEach((buyNowbtn) => {
@@ -209,7 +210,7 @@ popUp(name, modelCode, variants, rating, features, price, promoPrice, image, ben
                     },
                     success: (res) => {
                       console.log(res)
-                      window.location.replace('https://shop.samsung.com/uk/cart')
+                      // window.location.replace('https://shop.samsung.com/uk/cart')
                     }
                 });
         }
@@ -246,7 +247,7 @@ popUp(name, modelCode, variants, rating, features, price, promoPrice, image, ben
           <path d="M48 32c8.837 0 16 7.163 16 16s-7.163 16-16 16-16-7.163-16-16 7.163-16 16-16z"></path>
         </svg>
         <span class="usp-text">${feature.title}</span>`;
-      if (index > 4 && index < 9) {
+      if (index > 8 && index < 13) {
         ul.appendChild(li);
       } else if (feature.uid.includes('RB29FWRNDBC/EU') && index > 2) {
         ul.appendChild(li);
@@ -336,7 +337,7 @@ popUp(name, modelCode, variants, rating, features, price, promoPrice, image, ben
   modalContent.append(container);
   btnSizes();
   offerBlock();
-  // addToBasket();
+  addToBasket();
 
   modal.style.display = 'block';
   const span = document.getElementsByClassName('close')[0];

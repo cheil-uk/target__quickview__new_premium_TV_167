@@ -9,8 +9,8 @@ export default class ChangeBtn {
   let sku = ''
   const panelLinks = document.querySelectorAll('.product-card-v2__name-link');
   const quickViewBtns = document.querySelectorAll('.quickview__btn');
-  const quickViewFunction = (modelcode) => {
-    return this.quickView(modelcode)
+  const quickViewFunction = (modelcode, rating) => {
+    return this.quickView(modelcode, rating)
   }
 
   panelLinks.forEach((panelLink, i) => {
@@ -26,9 +26,13 @@ export default class ChangeBtn {
           topElement.prepend(quickViewBtn);
       }
       quickViewBtn.onclick = (e) => {
+      //get the current target panel
+        const panel = e.path[1];
+        //get the string rating of the current panel and convert it to a number
+        const rating = Number(panel.querySelector('.rating__point').children[1].textContent);
         e.preventDefault();
         sku = quickViewModeCode;
-        quickViewFunction(sku)
+        quickViewFunction(sku, rating)
       }
     })
   })
@@ -51,7 +55,11 @@ export default class ChangeBtn {
           boxFinder.prepend(panelBtn);
           panelBtn.onclick = (e) => {
             e.preventDefault();
-            quickViewFunction(modelCode)
+             //get the current target panel
+            const panel = e.path[1];
+            //get the string rating of the current panel and convert it to a number
+            const rating = Number(panel.querySelector('.rating__point').children[1].textContent);
+            quickViewFunction(modelCode, rating)
           }
         }
       }
@@ -67,10 +75,10 @@ export default class ChangeBtn {
  }
 
 
- async quickView(sku) {
+ async quickView(sku, rating) {
 
 
-
+  const currentPanelRating = rating;
   let productSku = sku;
   let offers = `https://p1-smn2-api-cdn.shop.samsung.com/tokocommercewebservices/v2/uk/products/${productSku}/offers?fields=FULL`
   let products = `https://p1-smn2-api.shop.samsung.com/tokocommercewebservices/v2/uk/products/${productSku}/**?fields=FULL`
@@ -86,15 +94,14 @@ export default class ChangeBtn {
     const name       = tvProducts.data.name;
     const modelCode  = tvProducts.data.code;
     const variants   = tvProducts.data.variantOptions;
-    const rating     = tvProducts.data.productRating;
+    const rating     = (tvProducts.data.productRating === undefined) ? currentPanelRating : tvProducts.data.productRating;
     const features   = tvProducts.data.productFeatureComponents;
     const price      = tvProducts.data.price.value;
     const promoPrice   = (tvProducts.data.promotionPrice) ? tvProducts.data.promotionPrice.value : price;
     const image      = tvProducts.data.picture.url || tvProducts.data.variantOptions[0].galleryImagesV2[0].images[0].value.url
     const exUrl      = tvProducts.data.externalUrl;
     const baseCode   = tvProducts.data.baseProductCode;
-    const proRating  = tvProducts.data.productRating;
-
+    const proRating  = (tvProducts.data.productRating === undefined) ? currentPanelRating : tvProducts.data.productRating;
     const benefits   = tvOffers.data.benefits;
 
   this.popUp(
@@ -165,7 +172,7 @@ popUp(name, modelCode, variants, rating, features, price, promoPrice, image, ben
   const offerBlock = () => {
     const container = document.querySelector('.offer__blocks');
     benefits.forEach((offers, i) => {
-      if (i <= 2 ) {
+      if (i <= 0 ) {
         const description = offers.title;
         const div = document.createElement('div');
         div.classList.add('descripton');
@@ -178,7 +185,7 @@ popUp(name, modelCode, variants, rating, features, price, promoPrice, image, ben
   }
 
   const addToBasket = () => {
-    const buyNowBtns = document.querySelectorAll('.js-buy-now');
+    const buyNowBtns = document.querySelectorAll('.js-cta-addon');
     const container = document.querySelector('.cta__container');
 
     buyNowBtns.forEach((buyNowbtn) => {
@@ -236,6 +243,7 @@ popUp(name, modelCode, variants, rating, features, price, promoPrice, image, ben
     ul.setAttribute('role', 'list');
 
       features.map((feature, i) => {
+        console.log(feature)
       let index = i
       let li = document.createElement('li');
       li.classList.add('dot-list__item');
@@ -245,7 +253,7 @@ popUp(name, modelCode, variants, rating, features, price, promoPrice, image, ben
           <path d="M48 32c8.837 0 16 7.163 16 16s-7.163 16-16 16-16-7.163-16-16 7.163-16 16-16z"></path>
         </svg>
         <span class="usp-text">${feature.title}</span>`;
-      if (index > 4 && index < 9) {
+      if (index > 8 && index < 13) {
         ul.appendChild(li);
       } else if (feature.uid.includes('RB29FWRNDBC/EU') && index > 2) {
         ul.appendChild(li);
@@ -335,7 +343,7 @@ popUp(name, modelCode, variants, rating, features, price, promoPrice, image, ben
   modalContent.append(container);
   btnSizes();
   offerBlock();
-  // addToBasket();
+  addToBasket();
 
   modal.style.display = 'block';
   const span = document.getElementsByClassName('close')[0];
