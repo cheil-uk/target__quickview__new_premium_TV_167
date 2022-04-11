@@ -63,7 +63,6 @@ export default class ChangeBtn {
           }
         }
       }
-
     });
   })
   observer.observe(quickViewBtn.parentElement, {subtree: true, childList: true});
@@ -127,14 +126,13 @@ export default class ChangeBtn {
         const name = boxFinder.querySelector('.product-card-v2__name-link');
         if (name !== null){
           const sku  = name.getAttribute('data-modelcode');
-          const currentSku = (err.response.data.errors[0].message.length <= 45 ) ?err.response.data.errors[0].message.slice(19, 33) : 'RB38A7B6BB1/EU'
+          const currentSku = (err.response.data.errors[0].message.length <= 45 ) ? err.response.data.errors[0].message.slice(19, 33) : 'RB38A7B6BB1/EU'
           const rating = boxFinder.querySelector('.rating__point').children[1].textContent;
           const features = boxFinder.querySelectorAll('.product-card-v2__feature-item');
           const seeMoreLink = boxFinder.querySelector(".product-card-v2__cta").firstChild;
           const image = boxFinder.querySelector('.image__main');
           const nameText = boxFinder.querySelector('.product-card-v2__name-text');
           if (sku === currentSku){
-            // console.log(name, currentSku, rating, features, seeMoreLink, image)
             this.notAvaliablePopUp(name, currentSku, rating, features, seeMoreLink, image, nameText)
           }
         }
@@ -142,7 +140,7 @@ export default class ChangeBtn {
     })
   }
   catch(error) {
-   console.log(error)
+   console.log(error, 'error')
   }
  }
 
@@ -159,7 +157,6 @@ popUp(name, modelCode, variants, rating, features, price, promoPrice, image, ben
     variants.forEach((optionalProducts) => {
       const variantSize = optionalProducts.size;
       const sku = optionalProducts.code;
-
       const btn = document.createElement('a');
             btn.classList.add('varient__button');
             btn.setAttribute('data-modelcode', sku);
@@ -176,7 +173,6 @@ popUp(name, modelCode, variants, rating, features, price, promoPrice, image, ben
         const description = offers.title;
         const div = document.createElement('div');
         div.classList.add('descripton');
-
         div.innerHTML = description;
 
         return container.append(div);
@@ -191,8 +187,6 @@ popUp(name, modelCode, variants, rating, features, price, promoPrice, image, ben
     buyNowBtns.forEach((buyNowbtn) => {
       const buyNowModelCode = buyNowbtn.getAttribute('data-modelcode');
       const qty = buyNowbtn.getAttribute('data-modelqty');
-
-
 
       if (buyNowModelCode === modelCode) {
         const buyNow = buyNowbtn.outerHTML;
@@ -223,9 +217,6 @@ popUp(name, modelCode, variants, rating, features, price, promoPrice, image, ben
 
       return container.append(div);
       }
-
-
-
     });
   }
 
@@ -253,7 +244,7 @@ popUp(name, modelCode, variants, rating, features, price, promoPrice, image, ben
           <path d="M48 32c8.837 0 16 7.163 16 16s-7.163 16-16 16-16-7.163-16-16 7.163-16 16-16z"></path>
         </svg>
         <span class="usp-text">${feature.title}</span>`;
-      if (index > 8 && index < 13) {
+      if (index > 7 && index < 13) {
         ul.appendChild(li);
       } else if (feature.uid.includes('RB29FWRNDBC/EU') && index > 2) {
         ul.appendChild(li);
@@ -305,7 +296,7 @@ popUp(name, modelCode, variants, rating, features, price, promoPrice, image, ben
       <small>${modelCode}</small>
       <div class="reviews">
           <div class="stars">
-              ${stars(rating)}<p><strong>(${proRating})</strong></p>
+              ${stars(rating)}<p><strong>(${parseFloat(proRating).toFixed(1)})</strong></p>
           </div>
         </div>
       <ul class="dot-list" role="list">
@@ -375,8 +366,7 @@ move() {
 }
 
 notAvaliablePopUp(name, currentSku, rating, features, seeMoreLink, image, nameText) {
-  // console.log(name, currentSku, rating, features, seeMoreLink, image, nameText)
-  // console.log(seeMoreLink)
+
   const modal = document.querySelector('.modal');
   const modalContent = document.querySelector('.modal-content');
   const imageSrc = image.getAttribute("src");
@@ -395,8 +385,8 @@ notAvaliablePopUp(name, currentSku, rating, features, seeMoreLink, image, nameTe
     let ul = document.createElement('ul');
     ul.classList.add('dot-list');
     ul.setAttribute('role', 'list');
-
-      features.map((feature, i) => {
+    console.log(features)
+      features.forEach((feature, i) => {
       let index = i
       let li = document.createElement('li');
       li.classList.add('dot-list__item');
@@ -405,14 +395,9 @@ notAvaliablePopUp(name, currentSku, rating, features, seeMoreLink, image, nameTe
         `<svg class="icon" focusable="false" viewBox="0 0 96 96">
           <path d="M48 32c8.837 0 16 7.163 16 16s-7.163 16-16 16-16-7.163-16-16 7.163-16 16-16z"></path>
         </svg>
-        <span class="usp-text">${feature.title}</span>`;
-      if (index > 11 && index < 15) {
-        console.log(feature.title)
-        ul.appendChild(li);
-      } else if (feature.uid.includes('RB29FWRNDBC/EU') && index > 2) {
-        ul.appendChild(li);
-      }
-    }).join('');
+        <span class="usp-text">${feature.innerText.trim()}</span>`;
+      ul.appendChild(li);
+    })
 
     return ul.innerHTML;
   }

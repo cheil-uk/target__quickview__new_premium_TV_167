@@ -18,7 +18,7 @@ export default class Tv {
 
   panelLinks.forEach((panelLink) => {
 
-      const modelCode = panelLink.getAttribute('data-modelcode');
+    const modelCode = panelLink.getAttribute('data-modelcode');
     let elementOne = panelLink.parentElement.parentElement.parentElement.parentElement.parentElement;
     let elementTwo = panelLink.parentElement;
     let topElement = (elementOne === null) ? elementTwo : elementOne;
@@ -57,11 +57,7 @@ export default class Tv {
 
       sku = modelCode;
       this.quickView(sku, rating);
-
     }
-
-
-
   })
  }
 
@@ -126,6 +122,7 @@ export default class Tv {
           const image = boxFinder.querySelector('.image__main');
           const nameText = boxFinder.querySelector('.product-card-v2__name-text');
           if (sku === currentSku){
+
             this.notAvaliablePopUp(name, currentSku, rating, features, seeMoreLink, image, nameText)
           }
         }
@@ -152,11 +149,10 @@ popUp(name, modelCode, variants, rating, features, price, promoPrice, image, ben
     variants.forEach((optionalProducts) => {
       const variantSize = optionalProducts.size;
       const sku = optionalProducts.code;
-
       const btn = document.createElement('a');
             btn.classList.add('varient__button');
             btn.setAttribute('data-modelcode', sku);
-      btn.innerText = variantSize + '"';
+            btn.innerText = variantSize + '"';
 
       return container.append(btn);
     });
@@ -187,8 +183,6 @@ popUp(name, modelCode, variants, rating, features, price, promoPrice, image, ben
       const buyNowModelCode = buyNowbtn.getAttribute('data-modelcode');
       const qty = buyNowbtn.getAttribute('data-modelqty');
 
-
-
       if (buyNowModelCode === modelCode) {
         const buyNow = buyNowbtn.outerHTML;
         const div = document.createElement('div');
@@ -217,9 +211,6 @@ popUp(name, modelCode, variants, rating, features, price, promoPrice, image, ben
 
       return container.append(div);
       }
-
-
-
     });
   }
 
@@ -247,7 +238,7 @@ popUp(name, modelCode, variants, rating, features, price, promoPrice, image, ben
           <path d="M48 32c8.837 0 16 7.163 16 16s-7.163 16-16 16-16-7.163-16-16 7.163-16 16-16z"></path>
         </svg>
         <span class="usp-text">${feature.title}</span>`;
-      if (index > 11 && index < 16) {
+      if (index > 10 && index < 16) {
 
         ul.appendChild(li);
       } else if (feature.uid.includes('RB29FWRNDBC/EU') && index > 2) {
@@ -270,6 +261,8 @@ popUp(name, modelCode, variants, rating, features, price, promoPrice, image, ben
   }
   return star_nodes;
   }
+
+
   //checks to see there was or is another pop in modal, if there is then it removes it
   checkPopup();
 
@@ -300,7 +293,7 @@ popUp(name, modelCode, variants, rating, features, price, promoPrice, image, ben
       <small>${modelCode}</small>
       <div class="reviews">
           <div class="stars">
-              ${stars(rating)}<p><strong>(${proRating})</strong></p>
+              ${stars(rating)}<p><strong>(${parseFloat(proRating).toFixed(1)})</strong></p>
           </div>
         </div>
       <ul class="dot-list" role="list">
@@ -350,11 +343,8 @@ popUp(name, modelCode, variants, rating, features, price, promoPrice, image, ben
         modal.style.display = 'none';
       }
     }
-
     const bulletpoints = new BulletPoints();
     bulletpoints.changeBulletPoints();
-
-
   }
 
 move() {
@@ -384,8 +374,10 @@ checkingSku() {
       })
 }
 
+
+
 notAvaliablePopUp(name, currentSku, rating, features, seeMoreLink, image, nameText) {
-  // console.log(name, currentSku, rating, features, seeMoreLink, image, nameText)
+
   const modal = document.querySelector('.modal');
   const modalContent = document.querySelector('.modal-content');
   const imageSrc = image.getAttribute("src");

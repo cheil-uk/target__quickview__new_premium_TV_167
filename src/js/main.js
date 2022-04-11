@@ -51,6 +51,7 @@ cheillondon.targetBoilerplate = (function () {
 							main.quickView.getSku();
 							main.quickView.checkingSku();
 							main.quickView.move();
+							main.viewMoreButton();
 					} else {
 						console.log('do not show')
 					}
@@ -112,9 +113,16 @@ cheillondon.targetBoilerplate = (function () {
 
 			console.log('XXX - addElements');
 
-
-
 		},
+
+		viewMoreButton() {
+
+  const viewMoreBtn = document.querySelector('.js-pf-view-more-cta');
+  viewMoreBtn.onclick = () => {
+			console.log('clicked')
+			main.quickView.getSku(); };
+
+},
 
 
 		// ==========================================================================
