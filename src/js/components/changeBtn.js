@@ -200,25 +200,26 @@ popUp(name, modelCode, variants, rating, features, price, promoPrice, image, ben
         div.classList.add('add__to__basket');
         div.innerHTML = buyNow;
 
-        div.onclick = () => {
-          $.ajax({
-                    type: 'POST',
-                    url: 'https://p1-smn2-api-cdn.shop.samsung.com/tokocommercewebservices/v2/uk/addToCart/multi?fields=BASIC',
-                    data: JSON.stringify([{
-                      productCode: buyNowModelCode,
-                      qty: qty,
-                      services: []
-                    }]),
-                    contentType: 'application/json',
-                    xhrFields: {
-                        withCredentials: true
-                    },
-                    success: (res) => {
-                      console.log(res)
-                      window.location.replace('https://shop.samsung.com/uk/cart')
-                    }
-                });
-        }
+        // don't need to add to basket because I'm already appending the button from pf panel
+        // div.onclick = () => {
+        //   $.ajax({
+        //             type: 'POST',
+        //             url: 'https://p1-smn2-api-cdn.shop.samsung.com/tokocommercewebservices/v2/uk/addToCart/multi?fields=BASIC',
+        //             data: JSON.stringify([{
+        //               productCode: buyNowModelCode,
+        //               qty: 1,
+        //               services: []
+        //             }]),
+        //             contentType: 'application/json',
+        //             xhrFields: {
+        //                 withCredentials: true
+        //             },
+        //             success: (res) => {
+        //               console.log(res)
+        //               // window.location.replace('https://shop.samsung.com/uk/cart')
+        //             }
+        //         });
+        // }
 
       return container.append(div);
       }
@@ -243,7 +244,6 @@ popUp(name, modelCode, variants, rating, features, price, promoPrice, image, ben
     ul.setAttribute('role', 'list');
 
       features.map((feature, i) => {
-        console.log(feature)
       let index = i
       let li = document.createElement('li');
       li.classList.add('dot-list__item');
@@ -396,8 +396,8 @@ notAvaliablePopUp(name, currentSku, rating, features, seeMoreLink, image, nameTe
     ul.classList.add('dot-list');
     ul.setAttribute('role', 'list');
 
-    features.forEach((feature) => {
-      // let index = i
+      features.map((feature, i) => {
+      let index = i
       let li = document.createElement('li');
       li.classList.add('dot-list__item');
       li.setAttribute('role', 'listitem');
@@ -405,9 +405,15 @@ notAvaliablePopUp(name, currentSku, rating, features, seeMoreLink, image, nameTe
         `<svg class="icon" focusable="false" viewBox="0 0 96 96">
           <path d="M48 32c8.837 0 16 7.163 16 16s-7.163 16-16 16-16-7.163-16-16 7.163-16 16-16z"></path>
         </svg>
-        <span class="usp-text">${feature.textContent}</span>`;
-        ul.appendChild(li)
-    })
+        <span class="usp-text">${feature.title}</span>`;
+      if (index > 11 && index < 15) {
+        console.log(feature.title)
+        ul.appendChild(li);
+      } else if (feature.uid.includes('RB29FWRNDBC/EU') && index > 2) {
+        ul.appendChild(li);
+      }
+    }).join('');
+
     return ul.innerHTML;
   }
 

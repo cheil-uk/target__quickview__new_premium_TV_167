@@ -14,6 +14,12 @@ export default class BulletPoints {
    'Incredible depth, stunning detail and industry-leading brightness',
    'Unleash the full power of 8K, thanks to our most intelligent processor yet',
    '12 multi-directional TV speakers deliver best-in-class 3D surround sound powered by Dolby Atmos'],
+   QE75QN800BTXXU: [
+   'Ultra-sharp lights, extreme contrast and jaw-dropping detail',
+   'Edge-to-edge viewing on the endlessly stunning Infinity Screen',
+   'Incredible depth, stunning detail and industry-leading brightness',
+   'Unleash the full power of 8K, thanks to our most intelligent processor yet',
+   '12 multi-directional TV speakers deliver best-in-class 3D surround sound powered by Dolby Atmos'],
    QE75QN700BTXXU: [
    'Super-focused lights, epic blacks and a brilliantly intense picture',
    'A new dimension of reality unfolds with 8K TV, featuring four times more detail than 4K',
@@ -70,7 +76,7 @@ export default class BulletPoints {
   }
 
 
-  const currentPopUpSku = document.querySelector("#myModal > div > div > div.product__info__content > small").textContent.trim();
+  const currentPopUpSku = document.querySelector("#myModal > div > div > div.product__info__content > small").textContent;
   const bulletPoints = document.querySelectorAll('.usp-text');
   for (const sku in skuObj) {
    if (Object.hasOwnProperty.call(skuObj, sku)) {
