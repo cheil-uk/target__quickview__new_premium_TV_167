@@ -51,7 +51,7 @@ export default class Tv {
 
     panelBtn.onclick = (e) => {
       //get the current target panel
-      const panel = e.path[1];
+      const panel = e.target.nextElementSibling.lastChild.children[1];
       //get the string rating of the current panel and convert it to a number
       const rating = Number(panel.querySelector('.rating__point').children[1].textContent);
 

@@ -10,10 +10,10 @@ export default class BulletPoints {
    '12 multi-directional TV speakers deliver best-in-class 3D surround sound powered by Dolby Atmos'],
    QE85QN800BTXXU: [
    'Ultra-sharp lights, extreme contrast and jaw-dropping detail',
-   'Edge-to-edge viewing on the endlessly stunning Infinity Screen',
-   'Incredible depth, stunning detail and industry-leading brightness',
    'Unleash the full power of 8K, thanks to our most intelligent processor yet',
-   '12 multi-directional TV speakers deliver best-in-class 3D surround sound powered by Dolby Atmos'],
+   'Catch all the action from any angle and see every brilliant detail, without distracting glare',
+   'Spectacular detail with flawless colour, exceptional contrast and leading HDR brightness',
+   '8 multi-directional TV speakers deliver 3D surround sound powered by Dolby Atmos'],
    QE75QN800BTXXU: [
    'Ultra-sharp lights, extreme contrast and jaw-dropping detail',
    'Edge-to-edge viewing on the endlessly stunning Infinity Screen',
