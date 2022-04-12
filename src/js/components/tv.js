@@ -142,6 +142,7 @@ popUp(name, modelCode, variants, rating, features, price, promoPrice, image, ben
   const monthlyPrice = promoPrice/36;
   const save =  price - promoPrice;
   const hiResImage = image.replace('$THUB_SHOP_S$', '$PD_SHOP_JPG$');
+  const altname = name.split('').splice(4).join('');
 
 
   const btnSizes = () => {
@@ -271,7 +272,7 @@ popUp(name, modelCode, variants, rating, features, price, promoPrice, image, ben
         container.innerHTML =
   `<div class="image__container">
       <div class="main__product__image">
-        <img src="${hiResImage}" alt="${modelCode}"/>
+        <img src="${hiResImage}" alt="${altname}"/>
       </div>
     <div class="icons">
     <div class="delivery">
