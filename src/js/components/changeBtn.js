@@ -196,25 +196,25 @@ popUp(name, modelCode, variants, rating, features, price, promoPrice, image, ben
         div.innerHTML = buyNow;
 
         // don't need to add to basket because I'm already appending the button from pf panel
-        // div.onclick = () => {
-        //   $.ajax({
-        //             type: 'POST',
-        //             url: 'https://p1-smn2-api-cdn.shop.samsung.com/tokocommercewebservices/v2/uk/addToCart/multi?fields=BASIC',
-        //             data: JSON.stringify([{
-        //               productCode: buyNowModelCode,
-        //               qty: 1,
-        //               services: []
-        //             }]),
-        //             contentType: 'application/json',
-        //             xhrFields: {
-        //                 withCredentials: true
-        //             },
-        //             success: (res) => {
-        //               console.log(res)
-        //               // window.location.replace('https://shop.samsung.com/uk/cart')
-        //             }
-        //         });
-        // }
+        div.onclick = () => {
+          $.ajax({
+                    type: 'POST',
+                    url: 'https://p1-smn2-api-cdn.shop.samsung.com/tokocommercewebservices/v2/uk/addToCart/multi?fields=BASIC',
+                    data: JSON.stringify([{
+                      productCode: buyNowModelCode,
+                      qty: 1,
+                      services: []
+                    }]),
+                    contentType: 'application/json',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    success: (res) => {
+                      console.log(res)
+                      // window.location.replace('https://shop.samsung.com/uk/cart')
+                    }
+                });
+        }
 
       return container.append(div);
       }
@@ -230,7 +230,7 @@ popUp(name, modelCode, variants, rating, features, price, promoPrice, image, ben
     })
   }
 
-  const featureList = () => {
+const featureList = () => {
     let ul = document.createElement('ul');
     ul.classList.add('dot-list');
     ul.setAttribute('role', 'list');
@@ -245,7 +245,8 @@ popUp(name, modelCode, variants, rating, features, price, promoPrice, image, ben
           <path d="M48 32c8.837 0 16 7.163 16 16s-7.163 16-16 16-16-7.163-16-16 7.163-16 16-16z"></path>
         </svg>
         <span class="usp-text">${feature.title}</span>`;
-      if (index > 7 && index < 13) {
+      if (index > 1 && index < 6) {
+
         ul.appendChild(li);
       } else if (feature.uid.includes('RB29FWRNDBC/EU') && index > 2) {
         ul.appendChild(li);
@@ -367,7 +368,7 @@ move() {
 }
 
 notAvaliablePopUp(name, currentSku, rating, features, seeMoreLink, image, nameText) {
-
+  console.log(name, currentSku, rating, features, seeMoreLink, image, nameText);
   const modal = document.querySelector('.modal');
   const modalContent = document.querySelector('.modal-content');
   const imageSrc = image.getAttribute("src");
