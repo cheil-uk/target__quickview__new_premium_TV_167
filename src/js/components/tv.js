@@ -340,6 +340,7 @@ popUp(name, modelCode, variants, rating, features, price, promoPrice, image, ben
         modal.style.display = 'none';
       }
       window.onclick = (e) => {
+        modal.style.display = 'none';
       if (e.target === modal) {
         modal.style.display = 'none';
       }
